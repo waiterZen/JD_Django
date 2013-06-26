@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %} 数据搜索 {% endblock %}
+
+{% block content %}
+    <div class="container" xmlns="http://www.w3.org/1999/html">
+    <div class="page-header">
+    <h2>数据搜索</h2>
+     <form class="">
+            <div class="">
+              <input class="span2"  id="keywords" type="text">
+              <div class="btn-group">
+                <button class="btn dropdown-toggle" data-toggle="dropdown">搜索 <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li id ="byID"><a href="#">根据ID</a></li>
+                  <li id ="byType"><a href="#">根据故障类型</a></li>
+                </ul>
+              </div>
+            </div>
+          </form>
+
+</div>
+    <table class="table table-striped">
+
+
+{% for item in list_items2 %}
+
+
+    <tr class="table table-condensed  success">
+      <td>{{ item.name }}</td>
+      <td>{{ item.errorDate }}</td>
+      <td>{{ item.errorType }}</td>
+      <td>{{ item.specialGas }}</td>
+      <td>{{ item.threeRatio }}</td>
+      <td>{{ item.useMethod }}</td>
+      <td>{{ item.advantage }}</td>
+      <td><a class="btn success" href="{% url 'ExDataApp.views.edit_product' item.id %}">编辑</a> </p></td>
+      <td><p><a class="btn danger" href="#">删除</a></p></td>
+    </tr>
+
+
+
+{##}
+{##}
+{#<div class="row" style="padding-top:10">#}
+{#    <div class="span3 media-grid">#}
+{#        <a href="#">#}
+
+{#        </a>#}
+{#    </div>#}
+{#    <div class="span-two-thirds">#}
+{#        <h4>{{item.name}}</h4>#}
+{#        {{item.errorDate}}#}
+{#    </div>#}
+{#    <div class="span2" style="align:right">#}
+{#        <p><a class="btn primary" href="{% url 'ExDataApp.views.view_product' item.id %}">查看</a></a> </p>#}
+{#        <p><a class="btn success" href="{% url 'ExDataApp.views.edit_product' item.id %}">编辑</a> </p>#}
+{#        <p><a class="btn danger" href="#">删除</a></p>#}
+{#    </div>#}
+{#</div>#}
+
+
+{% endfor %}
+
+</table>
+
+
+<script type="text/javascript">
+$("document").ready(function(){
+    $("#byID").bind("click",function(){
+
+        query = $("#keywords").val()
+        url =  "http://127.0.0.1:8000/ExDataApp/product/search?id="+query
+        window.location.replace(url);
+    });
+
+     $("#byType").bind("click",function(){
+
+        query = $("#keywords").val()
+        url =  "http://127.0.0.1:8000/ExDataApp/product/search?query="+query
+         window.location.replace(url);
+     });
+});
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,63 @@
+#coding=utf-8
+
+__author__ = 'waiter'
+
+
+import  xlrd
+import  os,sys,sqlite3,string
+
+
+
+# read  xls
+
+def  Excel2DB():
+    fname = "data.xls"
+    book = xlrd.open_workbook(fname)
+
+    sqliteDB = sqlite3.connect("Exdata.sqlite3")
+    cur = sqliteDB.cursor()
+
+
+    try:
+        sheet = book.sheet_by_name("Sheet1")
+
+    except:
+        print u"读取失败～！"
+
+    rows = sheet.nrows
+    cols = sheet.ncols
+
+
+    for row in range(1,rows):
+             name =  sheet.cell_value(row,1)
+             errorDate =  sheet.cell_value(row,2)
+             errorType =  sheet.cell_value(row,3)
+             specialGas =  sheet.cell_value(row,4)
+             threeRatio  =  sheet.cell_value(row,5)
+             useMethod =  sheet.cell_value(row,6)
+             advantage   =  sheet.cell_value(row,7)
+
+
+             sql = 'insert into  ExDataApp_product( name,errorDate,errorType,specialGas,threeRatio,useMethod,advantage) '+ \
+                    ' values(?,?,?,?,?,?,?)'
+
+             cur.execute(sql,(name,errorDate,errorType,specialGas,threeRatio,useMethod,advantage));
+
+
+    sqliteDB.commit()
+
+
+
+
+if  __name__ == '__main__':
+    Excel2DB()
+
+
+
+
+
+
+
+
+
+
